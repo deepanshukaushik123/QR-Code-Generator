@@ -1,0 +1,28 @@
+.Container{
+ border: 1px solid white !important;
+ margin: 3rem 0;
+ padding: 10px;
+ border-radius: 15px;
+}
+
+ h1{
+   
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+}
+
+.container input{
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.form-group {
+    margin: 10px !important;
+}
+
+.error{
+    color: red;
+}
