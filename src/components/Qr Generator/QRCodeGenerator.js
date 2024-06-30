@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './style.css';
 import QRCode from 'qrcode.react';
+import { toPng } from 'html-to-image';
 import logo from '../../Assets/logo2.png';
 
 const QRCodeGenerator = () => {
@@ -14,6 +15,7 @@ const QRCodeGenerator = () => {
 
     const [qrValue, setQrValue] = useState('');
     const [errors, setErrors] = useState({});
+    const qrCodeRef = useRef(null);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -53,6 +55,21 @@ const QRCodeGenerator = () => {
         }
     };
 
+    const handleDownloadClick = () => {
+        if (qrCodeRef.current) {
+            toPng(qrCodeRef.current)
+                .then((dataUrl) => {
+                    const link = document.createElement('a');
+                    link.download = `${contact.name}-qrcode.png`;
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch((error) => {
+                    console.error('Error generating QR code image:', error);
+                });
+        }
+    };
+
     return (
         <div className='Container'>
             <img src={logo} className='logo' alt='NexGen Logo' />
@@ -88,16 +105,23 @@ const QRCodeGenerator = () => {
                 qrValue && (
                     <div>
                         <h2>QR Code for {contact.name}</h2>
-                        <QRCode
-                            value={qrValue}
-                            size={250} // Adjust size as needed
-                            fgColor="#000000" // Foreground color (black)
-                            bgColor="#ffffff" // Background color (white)
-                            level="H" // Error correction level
-                        />
+                        <div ref={qrCodeRef}>
+                            <QRCode
+                                value={qrValue}
+                                size={250}
+                                fgColor="#000000"
+                                bgColor="#ffffff"
+                                level="H"
+                            />
+                        </div>
                     </div>
+
                 )
             }
+            {qrValue && (
+                <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
+
+            )}
         </div >
     );
 };
