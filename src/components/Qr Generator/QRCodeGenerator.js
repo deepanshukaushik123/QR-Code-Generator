@@ -301,7 +301,7 @@ const QRCodeGenerator = () => {
   }, [qrCodeInstance]);
 
   return (
-    <div className='container'>
+    <div className='main-container'>
       <img src={logo} className='logo' alt='NexGen Logo' />
       <h1>NexGen Contact QR Generator</h1>
       <div className='form-group'>
@@ -360,7 +360,7 @@ const QRCodeGenerator = () => {
         <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
       </div>
 
-      <div style={{ backgroundColor: "white", textAlign: "center", borderRadius: "30px", maxWidth: "30%"}} ref={qrCodeRef} />
+      <div className='QRBox' ref={qrCodeRef} />
       
       {qrCodeInstance && (
         <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
