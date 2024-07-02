@@ -1,12 +1,16 @@
-.Container{
+.container{
  border: 1px solid white !important;
  margin: 3rem 0;
- padding: 10px;
+ padding: 10px 0;
  border-radius: 15px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
 }
 
  h1{
-   
+   font-weight: 600;
 }
 
 .logo {
@@ -15,6 +19,7 @@
 }
 
 .container input{
+    width: 30em;
     border-radius: 15px;
     padding: 10px;
 }
