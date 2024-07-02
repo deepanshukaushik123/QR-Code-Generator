@@ -255,8 +255,8 @@ const QRCodeGenerator = () => {
       const vCard = generateVCard(contact);
 
       const newQrCodeInstance = new QRCodeStyling({
-        width: 300,
-        height: 300,
+        width: 250,
+        height: 250,
         data: vCard,
         cornersSquareOptions: {
           color: '#00BAF2',
@@ -265,17 +265,19 @@ const QRCodeGenerator = () => {
         cornersDotOptions: {
           color: '#00BAF2'
         },
-        image: NGColorLogo,
+        // image: NGColorLogo,
         dotsOptions: {
           color: "#263645",
-          type: 'rounded'
+          type: 'rounded',
+          scale: 0.4 // Decrease the density by increasing the spacing between dots
         },
         backgroundOptions: {
           color: 'transparent',
         },
         imageOptions: {
           crossOrigin: 'anonymous',
-          margin: 10
+          margin: 5,
+          imageSize: 0.8 // Increase the size of the image (default is 0.2)
         }
       });
 
