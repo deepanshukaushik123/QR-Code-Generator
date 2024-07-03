@@ -269,16 +269,16 @@ const QRCodeGenerator = () => {
         dotsOptions: {
           color: "#263645",
           type: 'rounded',
-          scale: 0.4 // Decrease the density by increasing the spacing between dots
+          // scale: 0.4 // Decrease the density by increasing the spacing between dots
         },
         backgroundOptions: {
           color: 'transparent',
         },
-        imageOptions: {
-          crossOrigin: 'anonymous',
-          margin: 5,
-          imageSize: 0.8 // Increase the size of the image (default is 0.2)
-        }
+        // imageOptions: {
+        //   crossOrigin: 'anonymous',
+        //   margin: 5,
+        //   imageSize: 0.8 // Increase the size of the image (default is 0.2)
+        // }
       });
 
       setQrCodeInstance(newQrCodeInstance); // Update the state with the new QR code instance
