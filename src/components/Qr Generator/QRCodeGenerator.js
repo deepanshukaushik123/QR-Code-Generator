@@ -113,7 +113,7 @@
 //     <div className='container'>
 //       <img src={logo} className='logo' alt='NexGen Logo' />
 //       <h1>NexGen Contact QR Generator</h1>
-//       <div className='form-group'>
+//       <div className=''>
 //         <label htmlFor="firstName">First Name:</label>
 //         <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
 //         {errors.firstName && <div className="error">{errors.firstName}</div>}
@@ -192,6 +192,7 @@ import './style.css';
 import QRCodeStyling from 'qr-code-styling';
 import logo from '../../Assets/logo2.png';
 import NGColorLogo from '../../Assets/NexGen Logo_color.png';
+import FakeQR from '../../Assets/FakeQr.jpg'
 
 const QRCodeGenerator = () => {
   const [contact, setContact] = useState({
@@ -303,71 +304,103 @@ const QRCodeGenerator = () => {
   }, [qrCodeInstance]);
 
   return (
-    <div className='main-container'>
-      <img src={logo} className='logo' alt='NexGen Logo' />
-      <h1>NexGen Contact QR Generator</h1>
-      <div className='form-group'>
-        <label htmlFor="firstName">First Name:</label>
-        <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
-        {errors.firstName && <div className="error">{errors.firstName}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="lastName">Last Name:</label>
-        <input type="text" className='form-control' id="lastName" name="lastName" value={contact.lastName} onChange={handleInputChange} />
-        {errors.lastName && <div className="error">{errors.lastName}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="phone">Phone Number:</label>
-        <input type="text" className='form-control' id="phone" name="phone" value={contact.phone} onChange={handleInputChange} />
-        {errors.phone && <div className="error">{errors.phone}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="email">Email Address:</label>
-        <input type="email" className='form-control' id="email" name="email" value={contact.email} onChange={handleInputChange} />
-        {errors.email && <div className="error">{errors.email}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="designation">Designation:</label>
-        <input type="text" className='form-control' id="designation" name="designation" value={contact.designation} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="company">Company Name:</label>
-        <input type="text" className='form-control' id="company" name="company" value={contact.company} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="street">Street Address:</label>
-        <input type="text" className='form-control' id="street" name="street" value={contact.street} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="city">City:</label>
-        <input type="text" className='form-control' id="city" name="city" value={contact.city} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="state">State:</label>
-        <input type="text" className='form-control' id="state" name="state" value={contact.state} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="postalCode">Postal Code:</label>
-        <input type="text" className='form-control' id="postalCode" name="postalCode" value={contact.postalCode} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="country">Country:</label>
-        <input type="text" className='form-control' id="country" name="country" value={contact.country} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="website">Website:</label>
-        <input type="text" className='form-control' id="website" name="website" value={contact.website} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
-      </div>
+    <>
+      <div className='fullContainer'>
 
-      <div className='QRBox' ref={qrCodeRef} />
-      
-      {qrCodeInstance && (
-        <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
-      )}
-    </div>
+        <div className='navBar'>
+          <img src={logo} className='logo' alt='NexGen Logo' />
+          <h1>NexGen Contact QR Generator</h1>
+        </div>
+
+        <div className='qrContainer'>
+
+          <div className='leftDiv'>
+            <div className='input-Grid'>
+
+              <div className=''>
+                <label htmlFor="firstName">First Name:</label>
+                <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
+                {errors.firstName && <div className="error">{errors.firstName}</div>}
+              </div>
+              <div className=''>
+                <label htmlFor="lastName">Last Name:</label>
+                <input type="text" className='form-control' id="lastName" name="lastName" value={contact.lastName} onChange={handleInputChange} />
+                {errors.lastName && <div className="error">{errors.lastName}</div>}
+              </div>
+
+              <div className=''>
+                <label htmlFor="phone">Phone Number:</label>
+                <input type="text" className='form-control' id="phone" name="phone" value={contact.phone} onChange={handleInputChange} />
+                {errors.phone && <div className="error">{errors.phone}</div>}
+              </div>
+              <div className=''>
+                <label htmlFor="email">Email Address:</label>
+                <input type="email" className='form-control' id="email" name="email" value={contact.email} onChange={handleInputChange} />
+                {errors.email && <div className="error">{errors.email}</div>}
+              </div>
+
+              <div className=''>
+                <label htmlFor="designation">Designation:</label>
+                <input type="text" className='form-control' id="designation" name="designation" value={contact.designation} onChange={handleInputChange} />
+              </div>
+              <div className=''>
+                <label htmlFor="company">Company Name:</label>
+                <input type="text" className='form-control' id="company" name="company" value={contact.company} onChange={handleInputChange} />
+              </div>
+
+              <div className=''>
+                <label htmlFor="street">Street Address:</label>
+                <input type="text" className='form-control' id="street" name="street" value={contact.street} onChange={handleInputChange} />
+              </div>
+              <div className=''>
+                <label htmlFor="city">City:</label>
+                <input type="text" className='form-control' id="city" name="city" value={contact.city} onChange={handleInputChange} />
+              </div>
+              <div className=''>
+                <label htmlFor="state">State:</label>
+                <input type="text" className='form-control' id="state" name="state" value={contact.state} onChange={handleInputChange} />
+              </div>
+              <div className=''>
+                <label htmlFor="postalCode">Postal Code:</label>
+                <input type="text" className='form-control' id="postalCode" name="postalCode" value={contact.postalCode} onChange={handleInputChange} />
+              </div>
+              <div className=''>
+                <label htmlFor="country">Country:</label>
+                <input type="text" className='form-control' id="country" name="country" value={contact.country} onChange={handleInputChange} />
+              </div>
+
+              <div className=''>
+                <label htmlFor="website">Website:</label>
+                <input type="text" className='form-control' id="website" name="website" value={contact.website} onChange={handleInputChange} />
+              </div>
+            </div>
+            <div className='button-btn'>
+              <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
+            </div>
+          </div>
+
+          <div className='rightDiv'>
+            {/* {qrCodeInstance?
+          <img className='QRBox' src={FakeQR}></img>
+            :
+            <div className='QRBox' ref={qrCodeRef} />
+            // {qrCodeInstance && (
+            //   <div className='QRBox' ref={qrCodeRef} />
+            // )}
+          } */}
+
+            {qrCodeInstance && (
+              <div className='QRBox' ref={qrCodeRef} />
+            )}
+
+            {qrCodeInstance && (
+              <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
+            )}
+
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
