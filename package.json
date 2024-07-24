@@ -2,7 +2,7 @@
   "name": "qr-contact-generator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://deepanshukaushik123.github.io/QR-Code-Generator",
+  "homepage": "http://qrcode.nexgentechsolutions.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

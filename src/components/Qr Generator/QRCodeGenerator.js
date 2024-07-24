@@ -2,7 +2,7 @@
 // import './style.css';
 // import QRCodeStyling from 'qr-code-styling';
 // import logo from '../../Assets/logo2.png';
-// import NGColorLogo from '../../Assets/NexGen Logo_color.png'
+// import NGColorLogo from '../../Assets/NexGen Logo_color.png';
 
 // const QRCodeGenerator = () => {
 //   const [contact, setContact] = useState({
@@ -21,7 +21,8 @@
 //   });
 
 //   const [errors, setErrors] = useState({});
-//   const [qrCode, setQrCode] = useState(null);
+//   const [qrCodeInstance, setQrCodeInstance] = useState(null); // State to hold the latest QR code instance
+
 //   const qrCodeRef = useRef(null);
 
 //   const handleInputChange = (event) => {
@@ -64,39 +65,40 @@
 //     if (validateFields()) {
 //       const vCard = generateVCard(contact);
 
-//       const newQrCode = new QRCodeStyling({
-//         width: 300,
-//         height: 300,
+//       const newQrCodeInstance = new QRCodeStyling({
+//         width: 250,
+//         height: 250,
 //         data: vCard,
 //         cornersSquareOptions: {
-//             color: '#00BAF2', // Customize the color of the big squares
-//             type: 'extra-rounded'
-//           },
-//           cornersDotOptions: {
-//             color: '#00BAF2' // Customize the color of the dots inside the big squares
-//           },
-//         image: NGColorLogo,
+//           color: '#00BAF2',
+//           type: 'extra-rounded'
+//         },
+//         cornersDotOptions: {
+//           color: '#00BAF2'
+//         },
+//         // image: NGColorLogo,
 //         dotsOptions: {
-//         //   color: '#000000',
-//         color: "#263645",
-//           type: 'rounded'
+//           color: "#263645",
+//           type: 'rounded',
+//           // scale: 0.4 // Decrease the density by increasing the spacing between dots
 //         },
 //         backgroundOptions: {
 //           color: 'transparent',
 //         },
-//         imageOptions: {
-//           crossOrigin: 'anonymous',
-//           margin: 10
-//         }
+//         // imageOptions: {
+//         //   crossOrigin: 'anonymous',
+//         //   margin: 5,
+//         //   imageSize: 0.8 // Increase the size of the image (default is 0.2)
+//         // }
 //       });
 
-//       setQrCode(newQrCode);
+//       setQrCodeInstance(newQrCodeInstance); // Update the state with the new QR code instance
 //     }
 //   };
 
 //   const handleDownloadClick = () => {
-//     if (qrCode) {
-//       qrCode.download({
+//     if (qrCodeInstance) {
+//       qrCodeInstance.download({
 //         name: `${contact.firstName}-${contact.lastName}-qrcode`,
 //         extension: 'png'
 //       });
@@ -104,15 +106,18 @@
 //   };
 
 //   useEffect(() => {
-//     if (qrCode) {
-//       qrCode.append(qrCodeRef.current);
+//     // Ensure previous QR code is removed before appending the new one
+//     if (qrCodeInstance && qrCodeRef.current) {
+//       qrCodeRef.current.innerHTML = ''; // Clear any existing QR code
+//       qrCodeInstance.append(qrCodeRef.current); // Append the new QR code
 //     }
-//   }, [qrCode]);
+//   }, [qrCodeInstance]);
 
 //   return (
-//     <div className='container'>
+//     <>
 //       <img src={logo} className='logo' alt='NexGen Logo' />
 //       <h1>NexGen Contact QR Generator</h1>
+//     <div className='main-container'>
 //       <div className='form-group'>
 //         <label htmlFor="firstName">First Name:</label>
 //         <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
@@ -169,18 +174,13 @@
 //         <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
 //       </div>
 
-//       {
-//         qrCode && (
-//           <div>
-//             <h2>QR Code for {contact.firstName} {contact.lastName}</h2>
-//             <div style={{backgroundColor: "white"}} ref={qrCodeRef} />
-//           </div>
-//         )
-//       }
-//       {qrCode && (
+//       <div className='QRBox' ref={qrCodeRef} />
+      
+//       {qrCodeInstance && (
 //         <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
 //       )}
 //     </div>
+//     </>
 //   );
 // };
 
@@ -210,7 +210,7 @@ const QRCodeGenerator = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [qrCodeInstance, setQrCodeInstance] = useState(null); // State to hold the latest QR code instance
+  const [qrCodeInstance, setQrCodeInstance] = useState(null);
 
   const qrCodeRef = useRef(null);
 
@@ -265,109 +265,106 @@ const QRCodeGenerator = () => {
         cornersDotOptions: {
           color: '#00BAF2'
         },
-        // image: NGColorLogo,
         dotsOptions: {
           color: "#263645",
-          type: 'rounded',
-          // scale: 0.4 // Decrease the density by increasing the spacing between dots
+          type: 'rounded'
         },
         backgroundOptions: {
           color: 'transparent',
-        },
-        // imageOptions: {
-        //   crossOrigin: 'anonymous',
-        //   margin: 5,
-        //   imageSize: 0.8 // Increase the size of the image (default is 0.2)
-        // }
+        }
       });
 
-      setQrCodeInstance(newQrCodeInstance); // Update the state with the new QR code instance
+      setQrCodeInstance(newQrCodeInstance);
     }
   };
 
-  const handleDownloadClick = () => {
+  const handleDownloadClick = (extension) => {
     if (qrCodeInstance) {
       qrCodeInstance.download({
         name: `${contact.firstName}-${contact.lastName}-qrcode`,
-        extension: 'png'
+        extension: extension
       });
     }
   };
 
   useEffect(() => {
-    // Ensure previous QR code is removed before appending the new one
     if (qrCodeInstance && qrCodeRef.current) {
-      qrCodeRef.current.innerHTML = ''; // Clear any existing QR code
-      qrCodeInstance.append(qrCodeRef.current); // Append the new QR code
+      qrCodeRef.current.innerHTML = '';
+      qrCodeInstance.append(qrCodeRef.current);
     }
   }, [qrCodeInstance]);
 
   return (
-    <div className='main-container'>
+    <>
       <img src={logo} className='logo' alt='NexGen Logo' />
       <h1>NexGen Contact QR Generator</h1>
-      <div className='form-group'>
-        <label htmlFor="firstName">First Name:</label>
-        <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
-        {errors.firstName && <div className="error">{errors.firstName}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="lastName">Last Name:</label>
-        <input type="text" className='form-control' id="lastName" name="lastName" value={contact.lastName} onChange={handleInputChange} />
-        {errors.lastName && <div className="error">{errors.lastName}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="phone">Phone Number:</label>
-        <input type="text" className='form-control' id="phone" name="phone" value={contact.phone} onChange={handleInputChange} />
-        {errors.phone && <div className="error">{errors.phone}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="email">Email Address:</label>
-        <input type="email" className='form-control' id="email" name="email" value={contact.email} onChange={handleInputChange} />
-        {errors.email && <div className="error">{errors.email}</div>}
-      </div>
-      <div className='form-group'>
-        <label htmlFor="designation">Designation:</label>
-        <input type="text" className='form-control' id="designation" name="designation" value={contact.designation} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="company">Company Name:</label>
-        <input type="text" className='form-control' id="company" name="company" value={contact.company} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="street">Street Address:</label>
-        <input type="text" className='form-control' id="street" name="street" value={contact.street} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="city">City:</label>
-        <input type="text" className='form-control' id="city" name="city" value={contact.city} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="state">State:</label>
-        <input type="text" className='form-control' id="state" name="state" value={contact.state} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="postalCode">Postal Code:</label>
-        <input type="text" className='form-control' id="postalCode" name="postalCode" value={contact.postalCode} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="country">Country:</label>
-        <input type="text" className='form-control' id="country" name="country" value={contact.country} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <label htmlFor="website">Website:</label>
-        <input type="text" className='form-control' id="website" name="website" value={contact.website} onChange={handleInputChange} />
-      </div>
-      <div className='form-group'>
-        <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
-      </div>
+      <div className='main-container'>
+        <div className='form-group'>
+          <label htmlFor="firstName">First Name:</label>
+          <input type="text" className='form-control' id="firstName" name="firstName" value={contact.firstName} onChange={handleInputChange} />
+          {errors.firstName && <div className="error">{errors.firstName}</div>}
+        </div>
+        <div className='form-group'>
+          <label htmlFor="lastName">Last Name:</label>
+          <input type="text" className='form-control' id="lastName" name="lastName" value={contact.lastName} onChange={handleInputChange} />
+          {errors.lastName && <div className="error">{errors.lastName}</div>}
+        </div>
+        <div className='form-group'>
+          <label htmlFor="phone">Phone Number:</label>
+          <input type="text" className='form-control' id="phone" name="phone" value={contact.phone} onChange={handleInputChange} />
+          {errors.phone && <div className="error">{errors.phone}</div>}
+        </div>
+        <div className='form-group'>
+          <label htmlFor="email">Email Address:</label>
+          <input type="email" className='form-control' id="email" name="email" value={contact.email} onChange={handleInputChange} />
+          {errors.email && <div className="error">{errors.email}</div>}
+        </div>
+        <div className='form-group'>
+          <label htmlFor="designation">Designation:</label>
+          <input type="text" className='form-control' id="designation" name="designation" value={contact.designation} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="company">Company Name:</label>
+          <input type="text" className='form-control' id="company" name="company" value={contact.company} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="street">Street Address:</label>
+          <input type="text" className='form-control' id="street" name="street" value={contact.street} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="city">City:</label>
+          <input type="text" className='form-control' id="city" name="city" value={contact.city} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="state">State:</label>
+          <input type="text" className='form-control' id="state" name="state" value={contact.state} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="postalCode">Postal Code:</label>
+          <input type="text" className='form-control' id="postalCode" name="postalCode" value={contact.postalCode} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="country">Country:</label>
+          <input type="text" className='form-control' id="country" name="country" value={contact.country} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor="website">Website:</label>
+          <input type="text" className='form-control' id="website" name="website" value={contact.website} onChange={handleInputChange} />
+        </div>
+        <div className='form-group'>
+          <button className='btn btn-primary' onClick={handleGenerateClick}>Generate QR Code</button>
+        </div>
 
-      <div className='QRBox' ref={qrCodeRef} />
-      
-      {qrCodeInstance && (
-        <button className='btn btn-success mt-3' onClick={handleDownloadClick}>Download QR Code</button>
-      )}
-    </div>
+        <div className='QRBox' ref={qrCodeRef} />
+
+        {qrCodeInstance && (
+          <div>
+            <button className='btn btn-success mt-3' onClick={() => handleDownloadClick('png')}>Download PNG</button>
+            <button className='btn btn-success mt-3' onClick={() => handleDownloadClick('jpg')}>Download JPG</button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
