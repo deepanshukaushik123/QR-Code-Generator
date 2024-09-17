@@ -439,8 +439,8 @@ const QRCodeGenerator = () => {
       const vCard = generateVCard(contact);
 
       const newQrCodeInstance = new QRCodeStyling({
-        width: 250,
-        height: 250,
+        width: 150,
+        height: 150,
         data: vCard,
         cornersSquareOptions: {
           color: '#00BAF2',
